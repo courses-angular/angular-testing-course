@@ -79,4 +79,22 @@ describe('ApiService', () => {
       body: 'This is the body of post 1',
     });
   });
+  it('should pass POST request', () => {
+    const newPost: Post = {
+      userId: 1,
+      id: 1,
+      title: 'Post 1',
+      body: 'This is the body of post 1',
+    };
+    let response: Post | undefined;
+    apiService.createPost(newPost).subscribe((post) => {
+      response = post;
+    });
+    const req = httpTestingController.expectOne(
+      'https://jsonplaceholder.typicode.com/posts',
+    );
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body).toEqual(newPost);
+    expect(req.request.url).toEqual(req.request.url);
+  });
 });
