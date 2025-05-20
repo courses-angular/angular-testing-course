@@ -5,6 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { Post } from '../types/post.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('ApiService', () => {
   let apiService: ApiService;
@@ -96,5 +97,29 @@ describe('ApiService', () => {
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(newPost);
     expect(req.request.url).toEqual(req.request.url);
+  });
+  it('should throw an error if request fails', () => {
+    let actualError: HttpErrorResponse | undefined;
+    apiService.getPosts().subscribe({
+      next: () => {
+        fail('should have failed with 500 error');
+      },
+      error: (error) => {
+        actualError = error;
+      },
+    });
+    const req = httpTestingController.expectOne(
+      'https://jsonplaceholder.typicode.com/posts',
+    );
+    req.flush('Something went wrong', {
+      status: 500,
+      statusText: 'Server Error',
+    });
+    if (!actualError) {
+      throw new Error('actualError is undefined');
+    }
+    expect(actualError.status).toEqual(500);
+    expect(actualError.statusText).toEqual('Server Error');
+    expect(actualError.error).toEqual('Something went wrong');
   });
 });
