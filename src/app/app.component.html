@@ -1,3 +1,9 @@
 <h1>Angular testing course</h1>
 <button (click)="onSendPost()">Send post</button>
+<mc-pagination
+  (pageChange)="onPageChange($event)"
+  [currentPage]="currentPage"
+  [limit]="10"
+  [total]="100"
+></mc-pagination>
 <router-outlet></router-outlet>
