@@ -7,11 +7,17 @@ import { first } from 'rxjs';
 describe('PaginationComponent', () => {
   let component: PaginationComponent;
   let fixture: ComponentFixture<PaginationComponent>;
+  const mockUtilsService = {
+    range: () => {
+      return [1, 2, 3, 4, 5];
+      // return [...Array(end - start).keys()].map((el) => el + start);
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [PaginationComponent],
-      providers: [UtilsService],
+      providers: [{ provide: UtilsService, useValue: mockUtilsService }],
     }).compileComponents();
     fixture = TestBed.createComponent(PaginationComponent);
     component = fixture.componentInstance;
