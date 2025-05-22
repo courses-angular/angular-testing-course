@@ -1,2 +1,29 @@
 {
+  "todos": [
+    {
+      "id": "1",
+      "text": "Learn Angular Testing",
+      "isCompleted": true
+    },
+    {
+      "id": "4",
+      "text": "Review testing best practices",
+      "isCompleted": false
+    },
+    {
+      "id": "5",
+      "text": "Set up CI/CD pipeline",
+      "isCompleted": true
+    },
+    {
+      "id": "d097",
+      "text": "aaa",
+      "isCompleted": false
+    },
+    {
+      "id": "e670",
+      "text": "aaa",
+      "isCompleted": false
+    }
+  ]
 }

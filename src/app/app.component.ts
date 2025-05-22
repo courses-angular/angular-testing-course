@@ -4,11 +4,23 @@ import { RouterOutlet } from '@angular/router';
 import { ApiService } from './shared/services/api.service';
 import { Post } from './shared/types/post.interface';
 import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { TodoComponent } from './todos/components/todo/todo.component';
+import { MainComponent } from './todos/components/main/main.component';
+import { HeaderComponent } from './todos/components/header/header.component';
+import { FooterComponent } from './todos/components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, PaginationComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    PaginationComponent,
+    TodoComponent,
+    MainComponent,
+    HeaderComponent,
+    FooterComponent,
+  ],
   templateUrl: './app.component.html',
   providers: [ApiService],
 })

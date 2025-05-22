@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TodoInterface } from '../types/todo.interface';
 import { FilterEnum } from '../types/filter.enum';
 import { HttpClient } from '@angular/common/http';
@@ -18,9 +18,12 @@ export class TodosService {
   }
 
   getTodos(): void {
-    this.httpClient.get<TodoInterface[]>(this.apiBaseUrl).subscribe((todos) => {
-      this.todosSig.set(todos);
-    });
+    this.httpClient
+      .get<TodoInterface[]>(this.apiBaseUrl)
+
+      .subscribe((todos) => {
+        this.todosSig.set(todos);
+      });
   }
 
   addTodo(text: string): void {
@@ -40,7 +43,7 @@ export class TodosService {
       .patch<TodoInterface>(`${this.apiBaseUrl}/${id}`, { text })
       .subscribe((updatedTodo) => {
         this.todosSig.update((todos) =>
-          todos.map((todo) => (todo.id === id ? updatedTodo : todo))
+          todos.map((todo) => (todo.id === id ? updatedTodo : todo)),
         );
       });
   }
@@ -63,7 +66,7 @@ export class TodosService {
       })
       .subscribe((updatedTodo) => {
         this.todosSig.update((todos) =>
-          todos.map((todo) => (todo.id === id ? updatedTodo : todo))
+          todos.map((todo) => (todo.id === id ? updatedTodo : todo)),
         );
       });
   }
@@ -74,12 +77,12 @@ export class TodosService {
         `${this.apiBaseUrl}/${todo.id}`,
         {
           isCompleted,
-        }
+        },
       );
     });
     forkJoin(requests$).subscribe(() => {
       this.todosSig.update((todos) =>
-        todos.map((todo) => ({ ...todo, isCompleted }))
+        todos.map((todo) => ({ ...todo, isCompleted })),
       );
     });
   }
