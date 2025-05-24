@@ -1,5 +1,5 @@
 import { ApiService } from './api.service';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -122,4 +122,28 @@ describe('ApiService', () => {
     expect(actualError.statusText).toEqual('Server Error');
     expect(actualError.error).toEqual('Something went wrong');
   });
+
+  it('should return list of posts with waitForAsync', waitForAsync(() => {
+    apiService.getPosts().subscribe((posts) => {
+      expect(posts).toEqual([
+        {
+          userId: 1,
+          id: 1,
+          title: 'Post 1',
+          body: 'This is the body of post 1',
+        },
+      ]);
+    });
+    const req = httpTestingController.expectOne(
+      'https://jsonplaceholder.typicode.com/posts',
+    );
+    req.flush([
+      {
+        userId: 1,
+        id: 1,
+        title: 'Post 1',
+        body: 'This is the body of post 1',
+      },
+    ]);
+  }));
 });

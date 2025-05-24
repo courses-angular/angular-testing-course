@@ -2,13 +2,13 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild,
-  inject,
 } from '@angular/core';
 import { TodoInterface } from '../../types/todo.interface';
 import { CommonModule } from '@angular/common';
@@ -35,10 +35,13 @@ export class TodoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.group('%c GROUP', 'color:#84B59F');
+    console.log('%c TodoComponent ngOnChanges', 'color:#84B59F');
+    console.groupEnd();
     if (changes['isEditing'].currentValue) {
       setTimeout(() => {
         this.textInput?.nativeElement.focus();
-      }, 0);
+      }, 1000);
     }
   }
 

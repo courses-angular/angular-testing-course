@@ -1,8 +1,14 @@
 import { TodoComponent } from './todo.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { TodosService } from '../../services/todos.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
+import { SimpleChange } from '@angular/core';
 
 describe('TodoComponent', () => {
   let component: TodoComponent;
@@ -100,4 +106,18 @@ describe('TodoComponent', () => {
     fixture.detectChanges();
     expect(todoService.changeTodo).toHaveBeenCalledWith('1', 'Updated Todo');
   });
+  it('should focus input when entering edit mode', fakeAsync(() => {
+    component.isEditing = true;
+    component.ngOnChanges({
+      isEditing: new SimpleChange(false, true, false),
+    });
+    fixture.detectChanges();
+    // Simulate the passage of time to allow the focus to be set
+    // after the timeout in ngOnChanges
+    // Note: The timeout in ngOnChanges is set to 1000ms
+    tick(1000);
+
+    const editInputElement = fixture.debugElement.query(By.css(':focus'));
+    expect(editInputElement).toBeTruthy();
+  }));
 });
