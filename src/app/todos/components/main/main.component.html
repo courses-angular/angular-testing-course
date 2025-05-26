@@ -1,20 +1,22 @@
-<section class="main" data-testid="main" [ngClass]="{ hidden: noTodosClass() }">
+<section [ngClass]="{ hidden: noTodosClass() }" class="main" data-testid="main">
   <input
-    id="toggle-all"
-    class="toggle-all"
-    type="checkbox"
-    data-testid="toggleAll"
-    [checked]="isAllTodosSelected()"
     (change)="toggleAllTodos($event)"
+    [checked]="isAllTodosSelected()"
+    class="toggle-all"
+    data-cy="toggleAll"
+    data-testid="toggleAll"
+    id="toggle-all"
+    type="checkbox"
   />
   <label for="toggle-all">Mark all as completed</label>
   <ul class="todo-list">
     <app-todos-todo
-      *ngFor="let todo of visibleTodos()"
-      [todo]="todo"
-      data-testid="todo"
-      [isEditing]="editingId === todo.id"
       (setEditingId)="setEditingId($event)"
+      *ngFor="let todo of visibleTodos()"
+      [isEditing]="editingId === todo.id"
+      [todo]="todo"
+      data-cy="todo"
+      data-testid="todo"
     ></app-todos-todo>
   </ul>
 </section>

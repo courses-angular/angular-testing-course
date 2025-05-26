@@ -1,12 +1,13 @@
 <header class="header">
   <h1>todos</h1>
   <input
-    class="new-todo"
-    placeholder="What needs to be done?"
-    autoFocus
-    [value]="text"
-    data-testid="newTodoInput"
     (keyup)="changeText($event)"
     (keyup.enter)="addTodo()"
+    [value]="text"
+    autoFocus
+    class="new-todo"
+    data-cy="newTodoInput"
+    data-testid="newTodoInput"
+    placeholder="What needs to be done?"
   />
 </header>
